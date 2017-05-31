@@ -1,0 +1,54 @@
+# Problem Set 2
+# Chris Wolf
+# 1:45
+
+problem1.py
+-----------
+
+def print_order(six_piece, nine_piece, twenty_piece):
+    print "Six pieces:", six_piece
+    print "Nine pieces:", nine_piece
+    print "Twenty pieces:", twenty_piece
+
+def purchase(nuggets):
+    for i in range(0, nuggets):
+        for j in range(0, nuggets):
+            for k in range(0, nuggets):
+                if (6*i + 9*j + 20*k == nuggets):
+                    print_order(i, j, k)
+                    return
+    print "No possible combination for this number of nuggets"
+
+num = int(input("How many McNuggets would you like? "))
+purchase(num)
+
+Results
+-------
+
+55 McNuggets: (1, 1, 2)
+56 McNuggets: (0, 4, 1)
+57 McNuggets: (2, 5, 0)
+58 McNuggets: (0, 2, 2)
+59 McNuggets: (2, 3, 1)
+60 McNuggets: (0, 0, 3)
+61 McNuggets: (2, 1, 2)
+62 McNuggets: (1, 4, 1)
+63 McNuggets: (0, 7, 0)
+64 McNuggets: (1, 2, 2)
+65 McNuggets: (0, 5, 1)
+
+Due to the logic instated by the program, the answers provided may not be the 
+most simple answers but all of the users have been checked by the author 
+to ensure accuracy.
+
+Thesis
+------
+
+The author spent a considerable amount of time studying the pattern behind the 
+purchases.  Due to multiple possible answers there was no apparent answer.  
+However, when the mentality was shifted from mathematic to logical, the answer 
+was obvious.  Because the lowest common variable is six, once there are 
+six sequential possibilities, every consequent number can be solved by simply 
+adding some number of six-pieces to a previous answer.  
+This information can used to determine the highest possible number of n
+uggets that cannot be purchased in Problem 3.
