@@ -226,14 +226,14 @@ def play_hand(hand, word_list):
                     print 'It took longer than %f to answer.' % allotted_time,
                     print 'You scored %f points.' % total
                 else:
-                    print 'It took', total_time, 'to provide an answer'
+                    print 'It took %f to provide an answer' % total_time
                     if total_time < 1.0:
                         total_time = 1.0
 
                     points = points / total_time
 
                     total += points
-                    print '%s earned %d points. Total: %d points' % (userWord, points, total)
+                    print '%s earned %f points. Total: %f points' % (userWord, points, total)
                     hand = update_hand(hand, userWord)
     print 'Total score: %f points.' % total
 
