@@ -75,7 +75,7 @@ def get_word_score(word, n):
     word: string (lowercase letters)
     returns: int >= 0
     """
-    score = 0
+    score = 0.0
     for letter in word:
         score += float(SCRABBLE_LETTER_VALUES[letter.lower()])
     if len(word) == n:
@@ -204,6 +204,7 @@ def play_hand(hand, word_list):
       word_list: list of lowercase strings
     """
     total = 0.0
+    allotted_time = float(raw_input('Enter time limit, in seconds, for players: '))
     initial_handlen = sum(hand.values())
     while sum(hand.values()) > 0:
         print 'Current Hand:',
@@ -221,17 +222,20 @@ def play_hand(hand, word_list):
                 end_time = time.time()
                 total_time = end_time - start_time
 
-                print 'It took', total_time, 'to provide an answer'
+                if total_time >= allotted_time:
+                    print 'It took longer than %f to answer.' % allotted_time,
+                    print 'You scored %f points.' % total
+                else:
+                    print 'It took', total_time, 'to provide an answer'
+                    if total_time < 1.0:
+                        total_time = 1.0
 
-                if total_time < 1.0:
-                    total_time = 1.0
+                    points = points / total_time
 
-                points /= total_time
-
-                total += points
-                print '%s earned %d points. Total: %d points' % (userWord, points, total)
-                hand = update_hand(hand, userWord)
-    print 'Total score: %d points.' % total
+                    total += points
+                    print '%s earned %d points. Total: %d points' % (userWord, points, total)
+                    hand = update_hand(hand, userWord)
+    print 'Total score: %f points.' % total
 
 
 #
