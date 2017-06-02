@@ -5,6 +5,7 @@
 
 import random
 import string
+import time
 
 VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
@@ -76,9 +77,9 @@ def get_word_score(word, n):
     """
     score = 0
     for letter in word:
-        score += SCRABBLE_LETTER_VALUES[letter.lower()]
+        score += float(SCRABBLE_LETTER_VALUES[letter.lower()])
     if len(word) == n:
-        score += 50
+        score += 50.0
     return score
 
 #
@@ -202,11 +203,12 @@ def play_hand(hand, word_list):
       hand: dictionary (string -> int)
       word_list: list of lowercase strings
     """
-    total = 0
+    total = 0.0
     initial_handlen = sum(hand.values())
     while sum(hand.values()) > 0:
         print 'Current Hand:',
         display_hand(hand)
+        start_time = time.time()
         userWord = raw_input('Enter word, or a . to indicate that you are finished: ')
         if userWord == '.':
              break
@@ -216,6 +218,16 @@ def play_hand(hand, word_list):
                 print 'Invalid word, please try again.'
             else:
                 points = get_word_score(userWord, initial_handlen)
+                end_time = time.time()
+                total_time = end_time - start_time
+
+                print 'It took', total_time, 'to provide an answer'
+
+                if total_time < 1.0:
+                    total_time = 1.0
+
+                points /= total_time
+
                 total += points
                 print '%s earned %d points. Total: %d points' % (userWord, points, total)
                 hand = update_hand(hand, userWord)
