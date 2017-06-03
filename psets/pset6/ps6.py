@@ -174,7 +174,7 @@ def update_hand(hand, word):
 #
 # Problem #3: Test word validity
 #
-def is_valid_word(word, hand, word_list):
+def is_valid_word(word, hand):
     """
     Returns True if word is in the word_list and is entirely
     composed of letters in the hand. Otherwise, returns False.
@@ -188,7 +188,7 @@ def is_valid_word(word, hand, word_list):
     for letter in word:
         if freq[letter] > hand.get(letter, 0):
             return False
-    return word in word_list
+    return word in points_dict
 
 #
 # Problem #4: Playing a hand
@@ -294,4 +294,5 @@ def play_game(word_list):
 #
 if __name__ == '__main__':
     word_list = load_words()
+    points_dict = get_words_to_points(word_list)
     play_game(word_list)
