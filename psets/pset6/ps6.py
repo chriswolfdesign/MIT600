@@ -174,7 +174,7 @@ def update_hand(hand, word):
 #
 # Problem #3: Test word validity
 #
-def is_valid_word(word, hand):
+def is_valid_word(word, hand, points_dict):
     """
     Returns True if word is in the word_list and is entirely
     composed of letters in the hand. Otherwise, returns False.
@@ -193,7 +193,7 @@ def is_valid_word(word, hand):
 #
 # Problem #4: Playing a hand
 #
-def play_hand(hand, word_list):
+def play_hand(hand, points_dict):
     """
     Allows the user to play the given hand, as follows:
 
@@ -230,7 +230,7 @@ def play_hand(hand, word_list):
         if userWord == '.':
              break
         else:
-            isValid = is_valid_word(userWord, hand, word_list)
+            isValid = is_valid_word(userWord, hand, points_dict)
             if not isValid:
                 print 'Invalid word, please try again.'
             else:
@@ -258,7 +258,7 @@ def play_hand(hand, word_list):
 # Problem #5: Playing a game
 # Make sure you understand how this code works!
 #
-def play_game(word_list):
+def play_game(points_dict):
     """
     Allow the user to play an arbitrary number of hands.
 
@@ -279,10 +279,10 @@ def play_game(word_list):
         cmd = raw_input('Enter n to deal a new hand, r to replay the last hand, or e to end game: ')
         if cmd == 'n':
             hand = deal_hand(HAND_SIZE)
-            play_hand(hand.copy(), word_list)
+            play_hand(hand.copy(), points_dict)
             print
         elif cmd == 'r':
-            play_hand(hand.copy(), word_list)
+            play_hand(hand.copy(), points_dict)
             print
         elif cmd == 'e':
             break
@@ -295,4 +295,4 @@ def play_game(word_list):
 if __name__ == '__main__':
     word_list = load_words()
     points_dict = get_words_to_points(word_list)
-    play_game(word_list)
+    play_game(points_dict)
