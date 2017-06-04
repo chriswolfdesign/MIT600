@@ -62,7 +62,7 @@ def get_frequency_dict(sequence):
 #
 # Problem #1: Scoring a word
 #
-def get_word_score(word, n):
+def get_word_score(word):
     """
     Returns the score for a word. Assumes the word is a
     valid word.
@@ -80,8 +80,6 @@ def get_word_score(word, n):
     score = 0.0
     for letter in word:
         score += float(SCRABBLE_LETTER_VALUES[letter.lower()])
-    if len(word) == n:
-        score += 50.0
     return score
 
 def get_words_to_points(word_list):
@@ -190,6 +188,40 @@ def is_valid_word(word, hand, points_dict):
             return False
     return word in points_dict
 
+def play_best_word(hand, points_dict):
+    """
+    Allows a computer player to play.
+    Takes in a hand and our current dictionary
+    Plays the best word possible given the tiles in its' hand
+
+    hand: The computer player's current hand
+    points_dict: Our current dictionary of playable words
+
+    returns: the word we have chosen to play
+    """
+
+    # Convert our hand into a dictionary to ease searching
+    hand = get_frequency_dict(hand)
+
+    # Set default parameters, and prepare base case (no playable word)
+    score = 0
+    current_word = "."
+
+    # Compare our hand to every word in points_dict
+    for word in points_dict:
+        if is_valid_word(word, hand, points_dict) and points_dict[word] > score:
+            score = points_dict[word]
+            current_word = word
+
+    """
+    Debugging
+    """
+    print current_word
+    """
+    End Debug
+    """
+    return current_word
+
 #
 # Problem #4: Playing a hand
 #
@@ -226,7 +258,7 @@ def play_hand(hand, points_dict):
         print 'Current Hand:',
         display_hand(hand)
         start_time = time.time()
-        userWord = raw_input('Enter word, or a . to indicate that you are finished: ')
+        userWord = play_best_word(hand, points_dict)
         if userWord == '.':
              break
         else:
@@ -234,7 +266,7 @@ def play_hand(hand, points_dict):
             if not isValid:
                 print 'Invalid word, please try again.'
             else:
-                points = get_word_score(userWord, initial_handlen)
+                points = points_dict[userWord]
                 end_time = time.time()
                 total_time = end_time - start_time
 
@@ -247,6 +279,9 @@ def play_hand(hand, points_dict):
                         total_time = 1.0
 
                     points = points / total_time
+
+                    if len(userWord) == initial_handlen:
+                        points *= 2
 
                     total += points
                     print '%s earned %f points. Total: %f points' % (userWord, points, total)
