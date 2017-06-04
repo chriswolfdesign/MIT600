@@ -199,10 +199,6 @@ def play_best_word(hand, points_dict):
 
     returns: the word we have chosen to play
     """
-
-    # Convert our hand into a dictionary to ease searching
-    hand = get_frequency_dict(hand)
-
     # Set default parameters, and prepare base case (no playable word)
     score = 0
     current_word = "."
@@ -213,13 +209,6 @@ def play_best_word(hand, points_dict):
             score = points_dict[word]
             current_word = word
 
-    """
-    Debugging
-    """
-    print current_word
-    """
-    End Debug
-    """
     return current_word
 
 #
