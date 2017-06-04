@@ -16,6 +16,7 @@ SCRABBLE_LETTER_VALUES = {
 }
 
 points_dict = {}
+time_limit = 0.0
 
 # -----------------------------------
 # Helper code
@@ -188,6 +189,22 @@ def is_valid_word(word, hand, points_dict):
             return False
     return word in points_dict
 
+def get_time_limit(points_dict, k):
+    """
+     Return the time limit for the computer player as a function of the
+    multiplier k.
+     points_dict should be the same dictionary that is created by
+    get_words_to_points.
+    """
+    start_time = time.time()
+    # Do some computation. The only purpose of the computation is so we can
+    # figure out how long your computer takes to perform a known task.
+    for word in points_dict:
+        get_frequency_dict(word)
+        get_word_score(word)
+        end_time = time.time()
+    return (end_time - start_time) * k
+
 def play_best_word(hand, points_dict):
     """
     Allows a computer player to play.
@@ -241,7 +258,7 @@ def play_hand(hand, points_dict):
       word_list: list of lowercase strings
     """
     total = 0.0
-    allotted_time = float(raw_input('Enter time limit, in seconds, for players: '))
+    allotted_time = time_limit
     initial_handlen = sum(hand.values())
     while sum(hand.values()) > 0:
         print 'Current Hand:',
@@ -319,4 +336,5 @@ def play_game(points_dict):
 if __name__ == '__main__':
     word_list = load_words()
     points_dict = get_words_to_points(word_list)
+    time_limit = get_time_limit(points_dict, 1)
     play_game(points_dict)
