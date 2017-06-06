@@ -294,6 +294,17 @@ def play_hand(hand, points_dict):
                     hand = update_hand(hand, userWord)
     print 'Total score: %f points.' % total
 
+def get_word_rearrangements(points_dict):
+    """
+    Takes in a word_dict and organizes each word based on its' letters
+    points_dict: the global variable used to store a word and its' points
+	returns: a new dictionary that holds the sorted word
+	"""
+    new_dict = {}
+    for word in word_list:
+        sorted_word = sorted(word)
+        new_dict[''.join(sorted_word)] = points_dict[word]
+    return new_dict
 
 #
 # Problem #5: Playing a game
