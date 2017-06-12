@@ -152,7 +152,7 @@ def update_hand(hand, word):
     """
     Assumes that 'hand' has all the letters in word.
     In other words, this assumes that however many times
-    a lettexr appears in 'word', 'hand' has at least as
+    a letter appears in 'word', 'hand' has at least as
     many of that letter in it.
 
     Updates the hand: uses up the letters in the given word
