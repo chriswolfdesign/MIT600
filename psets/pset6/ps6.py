@@ -414,3 +414,23 @@ if __name__ == '__main__':
     rearrange_dict = get_word_rearrangements(points_dict)
     time_limit = get_time_limit(points_dict, 1)
     play_game(points_dict)
+
+"""
+Analysis of algorithm efficiency
+--------------------------------
+
+This pset was a large spike in difficulty.  Though this was possible, I am
+still unsure whether or not I completed the pset entirely correctly.  The
+instructions were vague at times and made completion very difficult.
+
+I am not entirely sure how play_best_word_faster is supposed to be more
+efficient than play_best_word.  I believe it is due to the organization of the
+letters allowing the words to be found more quickly.  Its' efficiency may also
+come from the fact that each letter combination (roughly 60 in a seven letter
+hand) is searching through the entire dictionary instead of every word in the
+dictionary searching for every combination of letters.  I am realizing that
+algorithms are a difficulty for me and I will need to continue studying and
+refining my ability to perform these accurately.  I intend to come back and
+revise this pset after I have mastered more concepts in Computer Science.  For
+now I believe my code to be sufficient even if not entirely accurate.
+"""
