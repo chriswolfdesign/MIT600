@@ -249,6 +249,49 @@ def play_best_word(hand, points_dict):
 
     return current_word
 
+def play_best_word_faster(hand, points_dict):
+    """
+    A modified version of play_best_word that will ideally perform faster.
+
+    hand: The computer player's current hand
+    points_dict: Our current dictionary of playable words
+
+    returns: the word we have chosen to play
+    """
+
+    """ Convert hand into a string """
+    hand_string = ""
+    for letter in hand:
+        for i in range(hand[letter]):
+            hand_string += letter
+
+    """ Create and organize our list of subsets """
+    subsets = create_subsets(hand_string)
+    for item in subsets:
+        """
+        If the item is less than three letters and therefore inelible
+        to be a word
+        """
+        if len(item) < 3:
+            subsets.remove(item)
+            """ Otherwise, sort the word to be a sorted string """
+        else:
+            item = "".join(sorted(item))
+
+    """
+    Find all possible words but only return the one with the word
+    with the greatest value
+    """
+    best_word = "."
+    best_score = 0.0
+    for item in subsets:
+        if item in points_dict and len(item) > 3:
+            if points_dict[item] > best_score:
+                best_word = item
+                best_score = points_dict[item]
+
+    return best_word
+
 #
 # Problem #4: Playing a hand
 #
@@ -285,7 +328,7 @@ def play_hand(hand, points_dict):
         print 'Current Hand:',
         display_hand(hand)
         start_time = time.time()
-        userWord = play_best_word(hand, points_dict)
+        userWord = play_best_word_faster(hand, points_dict)
         if userWord == '.':
              break
         else:
