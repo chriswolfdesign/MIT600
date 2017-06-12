@@ -152,7 +152,7 @@ def update_hand(hand, word):
     """
     Assumes that 'hand' has all the letters in word.
     In other words, this assumes that however many times
-    a letter appears in 'word', 'hand' has at least as
+    a lettexr appears in 'word', 'hand' has at least as
     many of that letter in it.
 
     Updates the hand: uses up the letters in the given word
@@ -204,6 +204,27 @@ def get_time_limit(points_dict, k):
         get_word_score(word)
         end_time = time.time()
     return (end_time - start_time) * k
+
+def create_subsets(hand):
+    """
+    Takes in a string and returns all possible subsets
+    of said string.
+
+    hand: string representing all of the letters in the hand
+    return: a list of all possible subsets of the letters in hand
+    """
+
+    """ Create all possible subsets """
+    subsets = []
+    if len(hand) > 1:
+        subsets.append(hand[0])
+        tmp = create_subsets(hand[1:])
+        subsets.extend(tmp)
+        for item in tmp:
+            subsets.append(hand[0] + item)
+    else:
+        subsets.append(hand[0])
+    return subsets
 
 def play_best_word(hand, points_dict):
     """
@@ -347,5 +368,6 @@ def play_game(points_dict):
 if __name__ == '__main__':
     word_list = load_words()
     points_dict = get_words_to_points(word_list)
+    rearrange_dict = get_word_rearrangements(points_dict)
     time_limit = get_time_limit(points_dict, 1)
     play_game(points_dict)
