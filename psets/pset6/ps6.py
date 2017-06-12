@@ -1,5 +1,7 @@
 # 6.00 Problem Set 6
-#
+# Chris Wolf
+# 12 hours
+# 
 # The 6.00 Word Game
 #
 
