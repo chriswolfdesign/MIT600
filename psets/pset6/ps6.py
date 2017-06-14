@@ -1,7 +1,7 @@
 # 6.00 Problem Set 6
 # Chris Wolf
 # 12 hours
-# 
+#
 # The 6.00 Word Game
 #
 
@@ -287,7 +287,7 @@ def play_best_word_faster(hand, points_dict):
     best_word = "."
     best_score = 0.0
     for item in subsets:
-        if item in points_dict and len(item) > 3:
+        if item in points_dict and len(item) >= 3:
             if points_dict[item] > best_score:
                 best_word = item
                 best_score = points_dict[item]
