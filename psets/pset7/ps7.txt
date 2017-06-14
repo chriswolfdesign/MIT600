@@ -1,0 +1,158 @@
+"""
+Problem Set 7
+
+No coding for this problem set.  Code analysis for each question asked.
+
+Chris Wolf
+chriswolfdesign@gmail.com
+"""
+
+1) What is the computational complexity of fact0? Explain your answer.
+
+def fact0(i):
+    assert type(i) == int and i >= 0
+    if i == 0 or i == 1:
+        return 1
+    return i * fact0(i-1)
+
+"""
+The computational complexity is O(3(n!)).  This is because for each number
+in the pattern the computer must do three calculations (check if it is 1 or 0,
+multiply i * fact0, then complete fact0).  The 3 is overall meaningless
+because the process comes from factorial process, multiplying the process by
+3 is of little concern in computational theory, therefore the term for this
+algorithm could be stated as "factorial".
+"""
+
+2) What is the computational complexity of fact1? Explain your answer.
+
+def fact1(i):
+    assert type(i) == int and i >= 0
+    res = 1
+    while i > 1:
+        res = res * i
+        i -= 1
+    return res
+
+"""
+The computational complexity is O(2n + 1).  This is because in each loop there
+are two statements that must be completed.  While there are two statements that
+must be completed before the loop, the actual loop has a complexity of 2n - 2
+due to the while loop not including the value of 1, but the +2 from before the
+loop and the -2 from this exception cancel each other out.  The +1 comes from
+the return statement at the end but this constant, especially such a small
+constant, are of little concern.  This leaves us with O(2n) but the multiplier
+does little to the value compared to the variable, therefore the term for this
+algorithm could be stated as "linear".
+"""
+
+3) What is the computational complexity of makeSet? Explain your answer.
+
+def makeSet(s):
+    assert type(s) == str
+    res = ''
+    for c in s:
+        if not c in res:
+            res = res + c
+    return res
+
+"""
+The computational complexity of makeSet is O(2n + 3).  Again, the constant +3
+comes from commands occuring outside of the for loop (asserting the string,
+creating and initalizing the storage variable, returning the storage variable).
+The 2 multiplier occurs from a maximum of two statements per character in string
+(checking if character is already in string, and adding the character to the
+string).  This could lead to the computational complexity being even larger
+depending on how Python checks if a character is in a string, but because we
+cannot see the code to determine how this is done, we have no way of knowing
+the complexity of that action.  Regardless, with our given information the 2
+multiplier is not a factor, therefore the term for this algorithm could be
+stated as "linear".
+"""
+
+4) What is the computational complexity of intersect? Explain your answer.
+
+def intersect(s1, s2):
+    assert type(s1) == str and type(s2) == str
+    s1 = makeSet(s1)
+    s2 = makeSet(s2)
+    res = ''
+    for e in s1:
+        if e in s2:
+            res = res + e
+    return res
+
+"""
+The computational complexity of intersect is O(2n + 5).  The constant +5 comes
+from commands occuring outside the loop (asserting s1 and s2, making sets from
+s1 and s2 respectively, creating a storage variable, and returning storage
+variable).  We again have the problem of not understanding how Python goes
+about finding a character in a string so the computational complexity could be
+(and likely is) more in-depth than we can see.  Apart from this, it behave just
+like the makeSet function in Problem 3.  Therefore, the term for this algrorithm
+could be stated as "linear".
+"""
+
+5) Present a hand simulation of the code below. Describe the value to which each
+identifier is bound after each step of the computation. Note that “s1” and “s2” exist
+in more than one scope.
+
+def swap0(s1, s2):
+    assert type(s1) == list and type(s2) == list
+    tmp = s1[:]
+    s1 = s2[:]
+    s2 = tmp
+    return
+s1 = [1]
+s2 = [2]
+swap0(s1, s2)
+print s1, s2
+
+"""
+Before swap0
+s1 = [1]
+s2 = [2]
+
+After swap0
+s1 = [2]
+s2 = [1]
+"""
+
+6) Present a hand simulation of the following code:
+def swap1(s1, s2):
+    assert type(s1) == list and type(s2) == list
+    return s2, s1
+s1 = [1]
+s2 = [2]
+s1, s2 = swap1(s1, s2)
+print s1, s2
+
+"""
+Before swap1
+s1 = [1]
+s2 = [2]
+
+After swap1
+s1 = [2]
+s2 = [1]
+"""
+
+7) Present a hand simulation of the following code:
+def rev(s):
+    assert type(s) == list
+    for i in range(len(s)/2):
+        tmp = s[i]
+        s[i] = s[-(i+1)]
+        s[-(i+1)] = tmp
+
+s = [1,2,3]
+rev(s)
+print s
+
+"""
+Before rev
+s = [1, 2, 3]
+
+After rev
+s = [3, 2, 1]
+"""
