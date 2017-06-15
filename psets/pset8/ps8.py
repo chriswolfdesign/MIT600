@@ -127,6 +127,32 @@ def greedyAdvisor(subjects, maxWork, comparator):
             best_value = [0, 0]
             best_key = ""
 
+    # If user chooses to base decisions on the work load of the course
+    if comparator == "cmpWork":
+        best_work = [0, 500]
+        best_key = ""
+        while True:
+            for item in subjects:
+                # If current item has better value and we have enough hours
+                # left to take this class, keep it
+                if cmpWork(subjects[item], best_work) and \
+                subjects[item][WORK] <= work_left and not item in classes:
+                    best_key = item
+                    best_work = subjects[item]
+
+            # If no classes can fit into our schedule
+            if best_key == "":
+                break
+
+            # Add the class to classes and remove the hours necessary to take
+            # the course
+            classes[best_key] = subjects[best_key]
+            work_left -= subjects[best_key][WORK]
+
+            # Reset storage values for next iteration
+            best_work = [0, 500]
+            best_key = ""
+
 
     return classes
 
@@ -220,6 +246,6 @@ def dpTime():
 
 if __name__ == "__main__":
     subjects = loadSubjects(SUBJECT_FILENAME)
-    greedy_test = greedyAdvisor(subjects, 100, "cmpValue")
+    greedy_test = greedyAdvisor(subjects, 100, "cmpWork")
     printSubjects(subjects)
     printSubjects(greedy_test)
