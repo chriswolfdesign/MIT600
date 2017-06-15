@@ -2,14 +2,14 @@
 #
 # Intelligent Course Advisor
 #
-# Name:
+# Name: Chris Wolf
 # Collaborators:
 # Time:
 #
 
 import time
 
-SUBJECT_FILENAME = "subjects.txt"
+SUBJECT_FILENAME = "small_subjects.txt"
 VALUE, WORK = 0, 1
 
 #
@@ -25,15 +25,12 @@ def loadSubjects(filename):
     returns: dictionary mapping subject name to (value, work)
     """
 
-    # The following sample code reads lines from the specified file and prints
-    # each one.
     inputFile = open(filename)
+    subjects = {}
     for line in inputFile:
-        print line
-
-    # TODO: Instead of printing each line, modify the above to parse the name,
-    # value, and work of each subject and create a dictionary mapping the name
-    # to the (value, work).
+        my_line = line.split(",")
+        subjects[my_line[0]] = (int(my_line[1]), int(my_line[2]))
+    return subjects
 
 def printSubjects(subjects):
     """
@@ -189,3 +186,7 @@ def dpTime():
 #
 # TODO: write here your observations regarding dpAdvisor's performance and
 # how its performance compares to that of bruteForceAdvisor.
+
+if __name__ == "__main__":
+    subjects = loadSubjects(SUBJECT_FILENAME)
+    printSubjects(subjects)
