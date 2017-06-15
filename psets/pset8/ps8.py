@@ -9,7 +9,7 @@
 
 import time
 
-SUBJECT_FILENAME = "small_subjects.txt"
+SUBJECT_FILENAME = "subjects.txt"
 VALUE, WORK = 0, 1
 
 #
@@ -234,12 +234,37 @@ def bruteForceTime():
     Runs tests on bruteForceAdvisor and measures the time required to compute
     an answer.
     """
-    # TODO...
+    subjects = loadSubjects(SUBJECT_FILENAME)
+    start_time = time.time()
+    maxWork = 15
+    classes = bruteForceAdvisor(subjects, maxWork)
+    end_time = time.time()
+    total_time = end_time - start_time
+    print "It took " + str(total_time) + " to find optimal schedule for " + \
+        str(maxWork) + " work load."
 
 # Problem 3 Observations
 # ======================
 #
-# TODO: write here your observations regarding bruteForceTime's performance
+# 5 hour workload: 0.15 second
+# 10 hour workload: 29.2 seconds
+# 15 hour workload: unknown, was not willing to wait for computation to finish
+# 20 hour workload: unkown, was not willing to wait for computation to finish
+#
+# This algorithm is clearly unsustainable.  A 5 hour workload does not take
+# very long but most universities do not allow students to take less than 8.
+# 10 hour workload was also not very long but at my university most students
+# take a worload of 15 hours on average.  I am typing this while waiting for
+# that computation to be completed.  I started running this implementation
+# before I went to the bathroom and I don't particularly have the best diet
+# I wanted to determine the time for the maximum workload at my university,
+# 20 hours, but I figured the student would probably graduate college before
+# the program finished running the computation.
+#
+# In a real world situation, the advisors would have to e-mail in advance
+# with a student to find out how many hours they would like to take and let
+# their programs run over night so the student can know their best courses
+# before they come in.  Brute force for this application is not the way to go.
 
 #
 # Problem 4: Subject Selection By Dynamic Programming
@@ -272,7 +297,4 @@ def dpTime():
 # how its performance compares to that of bruteForceAdvisor.
 
 if __name__ == "__main__":
-    subjects = loadSubjects(SUBJECT_FILENAME)
-    greedy_test = greedyAdvisor(subjects, 10, "cmpRatio")
-    printSubjects(subjects)
-    printSubjects(greedy_test)
+    bruteForceTime()
