@@ -9,7 +9,7 @@
 
 import time
 
-SUBJECT_FILENAME = "subjects.txt"
+SUBJECT_FILENAME = "small_subjects.txt"
 VALUE, WORK = 0, 1
 
 #
@@ -153,6 +153,33 @@ def greedyAdvisor(subjects, maxWork, comparator):
             best_work = [0, 500]
             best_key = ""
 
+    # If user chooses to base decisions on the ratio between value
+    # and work load of the course
+    if comparator == "cmpRatio":
+        best_ratio = [0.0001, 1]
+        best_key = ""
+        while True:
+            for item in subjects:
+                # If current item has better value and we have enough hours
+                # left to take this class, keep it
+                if cmpRatio(subjects[item], best_ratio) and \
+                subjects[item][WORK] <= work_left and not item in classes:
+                    best_key = item
+                    best_ratio = subjects[item]
+
+            # If no classes can fit into our schedule
+            if best_key == "":
+                break
+
+            # Add the class to classes and remove the hours necessary to take
+            # the course
+            classes[best_key] = subjects[best_key]
+            work_left -= subjects[best_key][WORK]
+
+            # Reset storage values for next iteration
+            best_ratio = [0, 500]
+            best_key = ""
+
 
     return classes
 
@@ -246,6 +273,6 @@ def dpTime():
 
 if __name__ == "__main__":
     subjects = loadSubjects(SUBJECT_FILENAME)
-    greedy_test = greedyAdvisor(subjects, 100, "cmpWork")
+    greedy_test = greedyAdvisor(subjects, 10, "cmpRatio")
     printSubjects(subjects)
     printSubjects(greedy_test)
