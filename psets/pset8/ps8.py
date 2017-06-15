@@ -9,7 +9,7 @@
 
 import time
 
-SUBJECT_FILENAME = "small_subjects.txt"
+SUBJECT_FILENAME = "subjects.txt"
 VALUE, WORK = 0, 1
 
 #
@@ -97,7 +97,38 @@ def greedyAdvisor(subjects, maxWork, comparator):
     comparator: function taking two tuples and returning a bool
     returns: dictionary mapping subject name to (value, work)
     """
-    # TODO...
+
+    classes = {}
+    work_left = maxWork
+
+    # If user chooses to base decisions on the value of the course
+    if comparator == "cmpValue":
+        best_value = [0, 0]
+        best_key = ""
+        while True:
+            for item in subjects:
+                # If current item has better value and we have enough hours
+                # left to take this class, keep it
+                if cmpValue(subjects[item], best_value) and \
+                subjects[item][WORK] <= work_left and not item in classes:
+                    best_key = item
+                    best_value = subjects[item]
+
+            # If no classes can fit into our schedule
+            if best_key == "":
+                break
+
+            # Add the class to classes and remove the hours necessary to take
+            # the course
+            classes[best_key] = subjects[best_key]
+            work_left -= subjects[best_key][WORK]
+
+            # Reset storage values for next iteration
+            best_value = [0, 0]
+            best_key = ""
+
+
+    return classes
 
 def bruteForceAdvisor(subjects, maxWork):
     """
@@ -189,4 +220,6 @@ def dpTime():
 
 if __name__ == "__main__":
     subjects = loadSubjects(SUBJECT_FILENAME)
+    greedy_test = greedyAdvisor(subjects, 100, "cmpValue")
     printSubjects(subjects)
+    printSubjects(greedy_test)
