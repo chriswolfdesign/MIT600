@@ -9,7 +9,7 @@
 
 import time
 
-SUBJECT_FILENAME = "subjects.txt"
+SUBJECT_FILENAME = "small_subjects.txt"
 VALUE, WORK = 0, 1
 
 #
@@ -236,7 +236,7 @@ def bruteForceTime():
     """
     subjects = loadSubjects(SUBJECT_FILENAME)
     start_time = time.time()
-    maxWork = 15
+    maxWork = 5
     classes = bruteForceAdvisor(subjects, maxWork)
     end_time = time.time()
     total_time = end_time - start_time
@@ -278,7 +278,8 @@ def dpAdvisor(subjects, maxWork):
     maxWork: int >= 0
     returns: dictionary mapping subject name to (value, work)
     """
-    # TODO...
+    # TODO
+    pass
 
 #
 # Problem 5: Performance Comparison
@@ -288,7 +289,14 @@ def dpTime():
     Runs tests on dpAdvisor and measures the time required to compute an
     answer.
     """
-    # TODO...
+    subjects = loadSubjects(SUBJECT_FILENAME)
+    start_time = time.time()
+    maxWork = 15
+    classes = dpAdvisor(subjects, maxWork)
+    end_time = time.time()
+    total_time = end_time - start_time
+    print "It took " + str(total_time) + " to find optimal schedule for " + \
+        str(maxWork) + " work load."
 
 # Problem 5 Observations
 # ======================
@@ -297,4 +305,7 @@ def dpTime():
 # how its performance compares to that of bruteForceAdvisor.
 
 if __name__ == "__main__":
-    bruteForceTime()
+    subjects = loadSubjects(SUBJECT_FILENAME)
+    classes = bruteForceAdvisor(subjects, 20)
+    print("Brute Force Advisor Key maxWork = 20")
+    printSubjects(classes)
